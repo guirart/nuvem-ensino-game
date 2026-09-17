@@ -1,0 +1,1 @@
+.actions{width:min(620px,86%);margin:20px auto 0;grid-template-columns:repeat(2,minmax(220px,1fr));justify-content:center;align-items:center}.btn{width:100%;max-width:300px;justify-self:center}@media(max-width:650px){.actions{width:100%;grid-template-columns:1fr}.btn{max-width:100%}}
