@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NU.V.E.M | Educação Médica · Testes Respiratórios</title>
+<style>
+:root{
+  --bg:#f8fbfc;--paper:#ffffff;--ink:#123f58;--ink-2:#365f73;--muted:#7892a0;
+  --brand:#a9cfdf;--brand-dark:#285a72;--line:#dbe8ee;--soft:#eef6f9;--good:#2e7d62;--bad:#b25b56;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.01em}
+.app{max-width:1240px;margin:0 auto;padding:0 34px 44px}
+.topbar{height:112px;display:flex;align-items:center;justify-content:space-between;gap:24px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:24px}.logo-img{width:166px;height:auto;display:block}.brand-copy{padding-left:24px;border-left:1px solid var(--line)}.brand h1{font-family:Georgia,"Times New Roman",serif;font-size:18px;font-weight:500;letter-spacing:.01em;margin:0;color:var(--ink)}.brand p{margin:5px 0 0;font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted)}
+.stats{display:flex;gap:8px}.pill{border:1px solid var(--line);background:rgba(255,255,255,.55);border-radius:999px;padding:9px 13px;font-size:12px;color:var(--ink-2)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:38px;margin-top:38px;align-items:start}
+.card-wrap{min-height:650px;display:grid;place-items:start center;position:relative}
+.card{width:min(760px,100%);background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:30px 32px 26px;box-shadow:none;touch-action:none;user-select:none;transition:transform .18s ease,opacity .18s ease;position:relative;overflow:hidden}
+.card:before{content:"";display:block;height:3px;background:var(--brand);position:absolute;inset:0 0 auto}
+.card.dragging{transition:none}.stamp{position:absolute;top:30px;padding:6px 11px;border:1.5px solid;border-radius:2px;font-size:12px;font-weight:700;letter-spacing:.13em;opacity:0;z-index:4;background:#fff}.stamp.positive{left:30px;color:var(--good);transform:rotate(-7deg)}.stamp.negative{right:30px;color:var(--bad);transform:rotate(7deg)}
+.kicker{display:flex;justify-content:space-between;gap:16px;font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);margin-bottom:18px}
+.claim{font-family:Georgia,"Times New Roman",serif;font-weight:500;font-size:31px;line-height:1.18;letter-spacing:-.02em;margin:0 0 11px;color:var(--ink)}
+.question{font-size:13px;color:var(--muted);margin:0 0 24px;line-height:1.55}
+.chart-box{background:#fbfcfb;border:1px solid var(--line);border-radius:10px;padding:16px 16px 8px}.chart-head{display:flex;justify-content:space-between;gap:10px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}.legend{display:flex;gap:14px;text-transform:none;letter-spacing:0}.legend span:before{content:"";display:inline-block;width:18px;height:2px;margin-right:6px;vertical-align:middle}.legend .h2:before{background:var(--brand-dark)}.legend .ch4:before{background:var(--brand)}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:16px}.meta div{background:var(--paper);padding:12px 14px;min-height:66px}.meta b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:7px}.meta span{font-size:13px;color:var(--ink-2)}
+.actions{display:flex;justify-content:center;gap:16px;margin-top:22px}.btn{width:auto;min-width:150px;height:44px;border-radius:2px;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:13px;cursor:pointer;padding:0 18px;transition:.15s ease}.btn:hover{transform:translateY(-1px);border-color:var(--brand-dark)}.btn.no{color:var(--bad)}.btn.yes{color:var(--good)}.btn.no:after{content:"  Incorreta"}.btn.yes:after{content:"  Correta"}.hint{text-align:center;color:var(--muted);font-size:11px;margin-top:10px}
+.sidebar{background:transparent;border:0;border-left:1px solid var(--line);border-radius:0;padding:2px 0 0 28px;height:max-content;position:sticky;top:28px}.sidebar h2{font-family:Georgia,"Times New Roman",serif;font-weight:500;font-size:20px;margin:0 0 14px;color:var(--ink)}.progress{height:4px;background:#e1e7e4;border-radius:0;overflow:hidden}.progress>div{height:100%;background:var(--brand-dark);width:0}.scorebig{font-family:Georgia,"Times New Roman",serif;font-size:50px;font-weight:500;margin:18px 0 1px;color:var(--ink)}.small{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.1em;line-height:1.5}.rule{padding:12px 0;border-top:1px solid var(--line);font-size:12px;color:var(--ink-2);line-height:1.55}.rule b{color:var(--ink)}.source-note{margin-top:14px;padding:0;color:var(--muted);font-size:10.5px;line-height:1.55}.footer{text-align:left;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:10.5px;margin-top:36px}
+.overlay{position:fixed;inset:0;background:rgba(18,45,55,.46);display:none;place-items:center;padding:20px;z-index:20;backdrop-filter:blur(3px)}.overlay.show{display:grid}.modal{width:min(590px,100%);background:#fff;border:1px solid var(--line);border-radius:3px;padding:30px;box-shadow:0 24px 65px rgba(23,56,74,.16)}.result-icon{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-size:20px;font-weight:600;margin-bottom:18px;border:1px solid}.result-icon.ok{background:#f3f8f5;color:var(--good);border-color:#bdd6ca}.result-icon.err{background:#fbf5f4;color:var(--bad);border-color:#e2c5c2}.modal h3{font-family:Georgia,"Times New Roman",serif;font-size:28px;font-weight:500;margin:0 0 8px;color:var(--ink)}.modal p{color:var(--muted);font-size:13px;line-height:1.6}.why{background:var(--soft);border-radius:2px;padding:14px 15px;margin:16px 0 18px;border:0;line-height:1.55;color:var(--ink-2);font-size:13px}.continue,.restart{width:100%;border:1px solid var(--brand-dark);border-radius:8px;padding:12px 14px;background:var(--brand-dark);color:#fff;font-weight:600;font-size:12px;letter-spacing:.03em;cursor:pointer}.done{display:none;text-align:center;padding:76px 15px}.done.show{display:block}.done h2{font-family:Georgia,"Times New Roman",serif;font-size:34px;font-weight:500;margin:0}.done .scorefinal{font-family:Georgia,"Times New Roman",serif;font-size:72px;font-weight:500;margin:16px 0;color:var(--ink)}
+svg text{font-family:Inter,ui-sans-serif,sans-serif}
+@media(max-width:900px){.brand-copy{display:none}.logo-img{width:130px}.layout{grid-template-columns:1fr;gap:24px}.sidebar{border-left:0;border-top:1px solid var(--line);padding:24px 0 0;position:static}.topbar{height:auto;padding:20px 0;align-items:flex-start}.stats{flex-direction:column}.claim{font-size:26px}.meta{grid-template-columns:1fr}.app{padding:0 18px 28px}.card{padding:26px 18px 22px}.actions{gap:10px}.btn{min-width:0;flex:1}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="brand"><img class="logo-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcsAAAFECAYAAABI5BVKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAA...TRUNCATED..." alt="NU.V.E.M"><div class="brand-copy"><h1>Educação Médica</h1><p>Treinamento em testes respiratórios</p></div></div>
+    <div class="stats"><div class="pill">Acertos: <b id="hits">0</b></div><div class="pill">Sequência: <b id="streak">0</b></div></div>
+  </div>
+  <div class="layout">
+    <main>
+      <div class="card-wrap">
+        <div class="card" id="card">
+          <div class="stamp positive" id="stampYes">CORRETA</div><div class="stamp negative" id="stampNo">INCORRETA</div>
+          <div class="kicker"><span id="caseNum">CASO 1 DE 8</span><span id="testType">SIBO • H₂</span></div>
+          <h2 class="claim" id="claim">O gráfico é compatível com SIBO positivo.</h2>
+          <p class="question">Arraste para a direita se a afirmação estiver correta; para a esquerda se estiver incorreta.</p>
+          <div class="chart-box"><div class="chart-head"><span>Concentração no ar expirado (ppm)</span><div class="legend"><span class="h2">H₂</span><span class="ch4">CH₄</span></div></div><div id="chart"></div></div>
+          <div class="meta" id="meta"></div>
+          <div class="actions"><button class="btn no" id="noBtn" aria-label="Negativo">✕</button><button class="btn yes" id="yesBtn" aria-label="Positivo">✓</button></div>
+          <div class="hint">Arraste o cartão ou use as setas do teclado</div>
+        </div>
+        <div class="done" id="done"><h2>Rodada concluída</h2><div class="scorefinal" id="finalScore">0%</div><p id="finalText"></p><button class="restart" id="restart">Jogar novamente</button></div>
+      </div>
+    </main>
+    <aside class="sidebar"><h2>Progresso</h2><div class="progress"><div id="progressBar"></div></div><div class="scorebig"><span id="scorePct">0</span>%</div><div class="small">Precisão nesta rodada</div>
+      <h2 style="margin-top:24px">Critérios usados</h2>
+      <div class="rule"><b>SIBO (H₂):</b> elevação ≥20 ppm acima do basal até 90 min.</div>
+      <div class="rule"><b>IMO (CH₄):</b> CH₄ ≥10 ppm em qualquer momento, inclusive basal.</div>
+      <div class="rule"><b>Intolerâncias a carboidratos:</b> elevação de H₂ ≥20 ppm acima do basal; sintomas diferenciam má absorção de intolerância.</div>
+      <div class="rule"><b>Qualidade:</b> basal elevado, curva impossível ou sopro inadequado exigem cautela/repetição.</div>
+      <div class="source-note">Uso educacional. As regras e exemplos foram adaptados exclusivamente do material fornecido. Não substitui avaliação clínica nem protocolos locais.</div>
+    </aside>
+  </div>
+  <div class="footer">NU.V.E.M · Educação Médica &nbsp;&nbsp;|&nbsp;&nbsp; Ciência aplicada à prática clínica.</div>
+</div>
+<div class="overlay" id="overlay"><div class="modal"><div class="result-icon" id="resultIcon">✓</div><h3 id="resultTitle"></h3><p id="resultLead"></p><div class="why" id="resultWhy"></div><button class="continue" id="continueBtn">Próximo caso</button></div></div>
+<script>
+const cases=[
+ {type:'SIBO • H₂',claim:'O gráfico é compatível com SIBO positivo.',answer:true,t:[0,15,30,45,60,75,90,120],h2:[4,7,11,18,27,34,39,58],ch4:[2,2,3,3,4,4,4,5],meta:['Lactulose','Basal H₂: 4 ppm','Sem sintomas'],why:'Até 90 minutos, o H₂ sobe 35 ppm acima do basal (4 → 39). O critério do material é elevação ≥20 ppm acima do basal até 90 min; sintomas não são obrigatórios para positividade.'},
+ {type:'SIBO • H₂',claim:'O gráfico é compatível com SIBO positivo.',answer:false,t:[0,15,30,45,60,75,90,120],h2:[3,4,5,6,7,8,9,34],ch4:[2,2,2,2,3,3,3,4],meta:['Glicose/Lactulose','Basal H₂: 3 ppm','Elevação tardia'],why:'Não há aumento ≥20 ppm acima do basal até 90 minutos. A elevação aparece apenas aos 120 min, padrão descrito no material como compatível com fermentação colônica, não com SIBO positivo.'},
+ {type:'IMO • CH₄',claim:'O gráfico é compatível com IMO positivo.',answer:true,t:[0,15,30,45,60,75,90,120],h2:[3,4,4,5,5,6,7,8],ch4:[11,13,17,20,24,28,25,22],meta:['Lactulose','Basal CH₄: 11 ppm','Dor + distensão'],why:'O CH₄ já está ≥10 ppm na leitura basal e permanece elevado. Pelo material, CH₄ ≥10 ppm em qualquer momento da monitorização, inclusive em jejum, sustenta IMO positivo.'},
+ {type:'IMO • CH₄',claim:'O gráfico é compatível com IMO positivo.',answer:false,t:[0,15,30,45,60,75,90,120],h2:[2,3,4,4,5,6,7,8],ch4:[2,3,3,4,4,5,6,7],meta:['Glicose','Maior CH₄: 7 ppm','Sem sintomas'],why:'O CH₄ permanece abaixo de 10 ppm durante todo o teste. Portanto, pelos critérios do material, não preenche positividade para IMO.'},
+ {type:'Lactose • H₂',claim:'O gráfico indica intolerância à lactose.',answer:true,t:[0,30,60,90,120,150,180],h2:[5,7,9,12,28,64,92],ch4:[2,2,3,3,4,4,5],meta:['Lactose','Basal H₂: 5 ppm','Diarreia + flatulência'],why:'Há elevação >20 ppm acima do basal após 90 min e sintomas gastrointestinais. No material, essa combinação caracteriza intolerância à lactose.'},
+ {type:'Frutose • H₂',claim:'O gráfico indica intolerância à frutose.',answer:false,t:[0,30,60,90,120,150,180],h2:[5,7,8,11,25,27,26],ch4:[2,2,2,3,3,3,4],meta:['Frutose','Basal H₂: 5 ppm','Sem sintomas'],why:'O H₂ atinge 25 ppm, exatamente 20 ppm acima do basal, mas não há sintomas. O material diferencia má absorção (elevação sem sintomas) de intolerância (elevação com sintomas). A afirmação “intolerância” está incorreta.'},
+ {type:'Qualidade do exame',claim:'Este exame pode ser interpretado diretamente como negativo.',answer:false,t:[0,15,30,45,60,75,90,120],h2:[40,34,29,23,18,14,11,30],ch4:[3,3,3,3,4,4,4,5],meta:['Teste H₂','Basal H₂: 40 ppm','Preparo duvidoso'],why:'O basal de H₂ está muito elevado. O material orienta checar jejum e dieta, aguardar e repetir a leitura; um exame com basal elevado não deve ser simplesmente classificado como negativo.'},
+ {type:'Qualidade do exame',claim:'A queda isolada aos 75 min deve ser aceita como mudança fisiológica real.',answer:false,t:[0,15,30,45,60,75,90,120],h2:[4,7,12,20,38,10,47,71],ch4:[2,2,2,3,3,3,4,4],meta:['SIBO • H₂','Queda isolada: 75 min','Suspeita de sopro fraco'],why:'O material descreve uma queda isolada semelhante como provável erro de leitura/sopro fraco e recomenda repetir a medição, idealmente com outro aparelho, em vez de aceitar o ponto como fisiológico.'}
+];
+let i=0,hits=0,streak=0,locked=false,startX=0,dragX=0;
+const $=id=>document.getElementById(id), card=$('card'), overlay=$('overlay');
+function chartSvg(c){const W=620,H=280,p={l:42,r:18,t:20,b:38};const max=Math.max(50,...c.h2,...c.ch4)+10;const x=v=>p.l+(v/Math.max(...c.t))*(W-p.l-p.r);const y=v=>H-p.b-(v/max)*(H-p.t-p.b);let grid='';for(let k=0;k<=5;k++){const val=Math.round(max*k/5);const yy=y(val);grid+=`<line x1="${p.l}" y1="${yy}" x2="${W-p.r}" y2="${yy}" stroke="#e5eaed"/><text x="${p.l-8}" y="${yy+4}" fill="#71808b" font-size="10" text-anchor="end">${val}</text>`}let xt='';c.t.forEach(v=>xt+=`<text x="${x(v)}" y="${H-14}" fill="#71808b" font-size="10" text-anchor="middle">${v}</text>`);const pts=a=>a.map((v,j)=>`${x(c.t[j])},${y(v)}`).join(' ');return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Gráfico de H2 e CH4 ao longo do tempo">${grid}<line x1="${p.l}" y1="${H-p.b}" x2="${W-p.r}" y2="${H-p.b}" stroke="#cbd4da"/>${xt}<polyline fill="none" stroke="#285f6f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" points="${pts(c.h2)}"/><polyline fill="none" stroke="#6ca9a7" stroke-width="4" stroke-dasharray="8 7" stroke-linecap="round" stroke-linejoin="round" points="${pts(c.ch4)}"/>${c.h2.map((v,j)=>`<circle cx="${x(c.t[j])}" cy="${y(v)}" r="4" fill="#285f6f"/>`).join('')}${c.ch4.map((v,j)=>`<circle cx="${x(c.t[j])}" cy="${y(v)}" r="4" fill="#6ca9a7"/>`).join('')}<text x="${W/2}" y="${H-2}" fill="#71808b" font-size="10" text-anchor="middle">Tempo (min)</text></svg>`}
+function render(){const c=cases[i];$('caseNum').textContent=`CASO ${i+1} DE ${cases.length}`;$('testType').textContent=c.type;$('claim').textContent=c.claim;$('chart').innerHTML=chartSvg(c);$('meta').innerHTML=c.meta.map((m,j)=>`<div><b>${['Substrato/Exame','Referência','Contexto'][j]}</b><span>${m}</span></div>`).join('');$('progressBar').style.width=`${(i/cases.length)*100}%`;resetCard();}
+function resetCard(){card.style.transform='translateX(0) rotate(0)';card.style.opacity='1';$('stampYes').style.opacity=0;$('stampNo').style.opacity=0;locked=false}
+function choose(val){if(locked)return;locked=true;const c=cases[i],ok=val===c.answer;if(ok){hits++;streak++}else streak=0;$('hits').textContent=hits;$('streak').textContent=streak;$('scorePct').textContent=Math.round(hits/(i+1)*100);card.style.transform=`translateX(${val?900:-900}px) rotate(${val?18:-18}deg)`;card.style.opacity='.2';setTimeout(()=>{ $('resultIcon').className='result-icon '+(ok?'ok':'err');$('resultIcon').textContent=ok?'✓':'✕';$('resultTitle').textContent=ok?'Resposta correta':'Resposta incorreta';$('resultLead').textContent=ok?'A classificação está de acordo com os critérios apresentados no material.':'A classificação esperada para este caso é '+(c.answer?'POSITIVO / CORRETO':'NEGATIVO / INCORRETO')+'.';$('resultWhy').textContent=c.why;overlay.classList.add('show')},180)}
+function next(){overlay.classList.remove('show');i++;if(i>=cases.length){card.style.display='none';$('done').classList.add('show');$('progressBar').style.width='100%';const pct=Math.round(hits/cases.length*100);$('finalScore').textContent=pct+'%';$('finalText').textContent=pct>=80?'Desempenho consistente. Revise os casos de qualidade para consolidar a interpretação.':pct>=60?'Resultado intermediário. Revise os critérios de corte e o papel dos sintomas.':'Recomenda-se repetir a rodada com atenção aos tempos de corte e à diferença entre má absorção e intolerância.';return}render()}
+$('yesBtn').onclick=()=>choose(true);$('noBtn').onclick=()=>choose(false);$('continueBtn').onclick=next;$('restart').onclick=()=>{i=0;hits=0;streak=0;$('hits').textContent=0;$('streak').textContent=0;$('scorePct').textContent=0;$('done').classList.remove('show');card.style.display='block';render()};
+card.addEventListener('pointerdown',e=>{if(locked)return;startX=e.clientX;dragX=0;card.setPointerCapture(e.pointerId);card.classList.add('dragging')});card.addEventListener('pointermove',e=>{if(!startX||locked)return;dragX=e.clientX-startX;card.style.transform=`translateX(${dragX}px) rotate(${dragX/25}deg)`;$('stampYes').style.opacity=Math.max(0,Math.min(1,dragX/120));$('stampNo').style.opacity=Math.max(0,Math.min(1,-dragX/120))});card.addEventListener('pointerup',()=>{card.classList.remove('dragging');startX=0;if(Math.abs(dragX)>110)choose(dragX>0);else resetCard();dragX=0});
+document.addEventListener('keydown',e=>{if(overlay.classList.contains('show')){if(e.key==='Enter')next();return}if(e.key==='ArrowRight')choose(true);if(e.key==='ArrowLeft')choose(false)});render();
+</script>
+</body>
+</html>
